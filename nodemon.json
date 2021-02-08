@@ -1,8 +1,8 @@
 {
     "env": {
         "PORT": "8081",
-        "MONGO_PW": "Bnmqwe@001",
-        "MONGO_db": "ework",
-        "MONGO_UN": "eworks"
+        "MONGO_PW": "******",
+        "MONGO_db": "******",
+        "MONGO_UN": "******"
     }
 }
