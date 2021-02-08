@@ -1,0 +1,20 @@
+{
+  "name": "online-chat",
+  "version": "1.0.0",
+  "description": "Online chat Application for chit chat",
+  "main": "Server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Bhavadish Sriram <Bhavadish.bs@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.14",
+    "nodemon": "^2.0.7",
+    "request": "^2.88.2",
+    "socket.io": "^3.1.0"
+  }
+}
