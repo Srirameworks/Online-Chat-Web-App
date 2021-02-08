@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <title>Online chat</title>
+</header>
+<style>
+  .table td {
+    vertical-align: middle;
+    padding-left: 25%;
+    padding-right: 25%;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Full-width input fields */
+  input[type=text] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  select {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    background: #f1f1f1;
+  }
+
+  /* Add a background color when the inputs get focus */
+  input[type=text]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  /* Set a style for all buttons */
+  button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+
+  }
+
+  button:hover {
+    opacity: 1;
+  }
+
+  /* Extra styles for the cancel button */
+  .loginbtn {
+    padding: 14px 20px;
+    background-color: #3643f4;
+  }
+
+  /* Float cancel and signup buttons and add an equal width */
+  .loginbtn,
+  .signupbtn {
+    float: left;
+    width: 50%;
+  }
+
+  /* Add padding to container elements */
+  .container {
+    padding: 16px;
+  }
+
+  /* The Modal (background) */
+  .modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: #bebeb8;
+    padding-top: 50px;
+  }
+
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe !important;
+    margin: 5% auto 15% auto !important;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888 !important;
+    width: 30% !important;
+    /* Could be more or less, depending on screen size */
+  }
+
+  /* Style the horizontal ruler */
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  /* The Close Button (x) */
+  .close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #f44336;
+    cursor: pointer;
+  }
+
+  /* Clear floats */
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  #sent p,
+  #received p {
+    display: b;
+  }
+
+  /* Change styles for cancel button and signup button on extra small screens */
+  @media screen and (max-width: 300px) {
+
+    .cancelbtn,
+    .signupbtn {
+      width: 100%;
+    }
+  }
+</style>
+
+<body>
+  <div id="SignORLog" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h1>Sign Up/ Login</h1>
+        <p>Please fill in this form to chat online.</p>
+        <hr>
+        <label for="name"><b>Name</b></label>
+        <input id="inputName" type="text" placeholder="Your name" name="name">
+        <label><b>or</b></label>
+        <select id="selectName">
+        </select>
+        <div class="clearfix">
+          <button id="btnSignUp" type="submit" class="signupbtn">Sign Up</button>
+          <button id="btnLogin" type="submit" class="loginbtn">Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="selectfriend" class="modal">
+    <div class="modal-content">
+      <div class="container">
+        <h1>select stranger </h1>
+        <hr>
+        <select id="strangerName">
+
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <a class="navbar-brand" href="#">
+      <img src="./images/Fsriram.png" width="200" height="120" alt="Sriram e-works">
+    </a>
+  </nav>
+  <div class="container" style="background-color: #e9ecef;">
+
+    <h2>Online chat Application</h2>
+    <hr class="my-4">
+    <table class="table">
+      <tr>
+        <td><label>Name</label></td>
+        <td><label id="userName"></label></td>
+        <td><label id="userId" style="display:none;"></label></td>
+      </tr>
+      <tr>
+        <td> <label>Message</label></td>
+        <td colspan="2">
+          <textarea id="inputMessage" type="text" style="width: 200px;" placeholder="your message"></textarea>
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+            class="bi bi-chat-left-text" viewBox="0 0 16 16">
+            <path
+              d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+            <path
+              d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+          </svg>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button id="chatSend" class="btn btn-primary">Send</button>
+        </td>
+      </tr>
+    </table>
+
+
+  </div>
+  <div class="container" style="display:table; border: 1px;border-style:double;background-color: #d0eee8;display:table">
+    <div style="display: table-row;">
+      <p style="display:table-caption;">Chat Window</p>
+    </div>
+    <div style="display: table-row;">
+      <label id="send" style=" display: table-cell;">
+        Name
+      </label>
+      <label id='receive' style="margin-left: 50%; display: table-cell;">
+        Friend Name
+      </label>
+    </div>
+    <div class="container" style="background-color: #baf3e9; display: table-row;">
+      <div id='sent' style="width: 50%; display: table-cell;">
+      </div>
+      <div id='received' style="width: 50%;display: table-cell;">
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+  integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+  integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+  integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script type="text/javascript">
+
+  const host = $(location).attr('protocol') + '//' + $(location).attr('host')
+  let userId
+  let receiveId
+
+  var getUserList = () => {
+
+    const URL = host + '/app/user'
+    console.log(URL)
+    $.ajax({
+      type: 'GET',
+      url: URL,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      data: null,
+      success: (data) => {
+        $("#selectName").append($("<option/>").val('0').text('Select Name'))
+        $.each(data.userlist, function () {
+          $("#selectName").append($("<option/>").val(this._id).text(this.Name))
+        });
+      },
+      error: (xhr, textStatus, errorThrown) => {
+        if (xhr.status == 409) {
+          alert(JSON.parse(xhr.responseText)['message'])
+        } else {
+          alert(JSON.parse(xhr.responseText)['message'])
+        }
+      }
+    });
+  }
+
+  var getStrangerList = (id) => {
+    const URL = host + '/app/user/' + id
+    console.log(URL)
+    $.ajax({
+      type: 'GET',
+      url: URL,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: (data) => {
+        console.log(data.list)
+        $('#strangerName option').remove();
+        $("#strangerName").append($("<option/>").val('0').text('Select Stranger'))
+        $.each(data.list, function () {
+          $("#strangerName").append($("<option/>").val(this._id).text(this.Name))
+        });
+      },
+      error: (xhr, textStatus, errorThrown) => {
+        if (xhr.status == 409) {
+          alert(JSON.parse(xhr.responseText)['message'])
+        } else {
+          alert(JSON.parse(xhr.responseText)['message'])
+        }
+      }
+    });
+  }
+
+  var postMessage = (message) => {
+
+    const URL = host + '/app/message'
+
+    $.ajax({
+      type: 'POST',
+      url: URL,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      data: JSON.stringify(message),
+      success: (data) => {
+        console.log(data.createmessage)
+      },
+      error: (xhr, textStatus, errorThrown) => {
+        if (xhr.status == 409) {
+          alert(JSON.parse(xhr.responseText)['message'])
+        } else {
+          alert(JSON.parse(xhr.responseText)['message'])
+        }
+      }
+    });
+  }
+
+  var getUserMessage = (Sender, Receiver) => {
+
+    const URL = host + '/app/message/' + Sender + '&' + Receiver
+
+    console.log(URL)
+    $.ajax({
+      type: 'GET',
+      url: URL,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: (data) => {
+        console.log(data.messagelist)
+        $.each(data.messagelist, function () {
+          $("#sent").append(`<p> ${this.message} </p>`)
+        });
+      },
+      error: (xhr, textStatus, errorThrown) => {
+        if (xhr.status == 409) {
+          alert(JSON.parse(xhr.responseText)['message'])
+        } else {
+          alert(JSON.parse(xhr.responseText)['message'])
+        }
+      }
+    });
+  }
+
+  var getReceiverMessage = (Sender, Receiver) => {
+    const URL = host + '/app/message/' + Receiver + '&' + Sender
+    console.log(URL)
+    $.ajax({
+      type: 'GET',
+      url: URL,
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: (data) => {
+        console.log(data.messagelist)
+        $.each(data.messagelist, function () {
+          $("#received").append(`<p> ${this.message} </p>`)
+        });
+      },
+      error: (xhr, textStatus, errorThrown) => {
+        if (xhr.status == 409) {
+          alert(JSON.parse(xhr.responseText)['message'])
+        } else {
+          alert(JSON.parse(xhr.responseText)['message'])
+        }
+      }
+    });
+  }
+  $(() => {
+    $('#SignORLog').show()
+
+    getUserList()
+
+    $('#btnSignUp').click(() => {
+      const name = $('#inputName').val()
+      if (name != '') {
+        const URL = host + '/app/user'
+        var user = { "Name": name }
+        $.ajax({
+          type: 'POST',
+          url: URL,
+          data: JSON.stringify(user),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: (data, textStatus, xhr) => {
+            if (xhr.status == 201) {
+              var user = data.createduser
+              $('#userName').html(user.Name)
+              userId = user._id
+              $('#send').html(user.Name)
+              $('#SignORLog').hide()
+              getStrangerList(user._id)
+              $('#selectfriend').show()
+            }
+          },
+          error: (xhr, textStatus, errorThrown) => {
+            if (xhr.status == 409) {
+              alert(JSON.parse(xhr.responseText)['message'])
+            } else {
+              alert(JSON.parse(xhr.responseText)['message'])
+            }
+          }
+        });
+      } else {
+        alert('Enter Name')
+      }
+
+    })
+
+    $('#btnLogin').click(() => {
+      userId = $("#selectName :selected").val()
+      var namehtml = $("#selectName :selected").text()
+      if (userId != 0) {
+        $('#userName').html(namehtml)
+        $('#send').html(namehtml)
+        $('#SignORLog').hide()
+        getStrangerList(userId)
+        $('#selectfriend').show()
+      }
+      else {
+        alert('Select Name')
+      }
+    })
+
+    $('#strangerName').on('change', () => {
+      receiveId = $("#strangerName :selected").val()
+      var namehtml = $("#strangerName :selected").text()
+      const One = ''
+      if (receiveId != 0) {
+        $('#receive').html(namehtml)
+        $('#selectfriend').hide()
+        getUserMessage(userId, receiveId)
+        getReceiverMessage(userId, receiveId)
+      }
+    });
+
+    $('#chatSend').click(() => {
+
+      var NewMessage = $('#inputMessage').val()
+
+      var message = {
+        sender: userId,
+        receiver: receiveId,
+        Newmessage: NewMessage
+      }
+      if (NewMessage != '') {
+        postMessage(message)
+      } else {
+        alert('Enter Something in Box..')
+      }
+    })
+
+
+  })
+  addMessage = (addmessage) => {
+    if (userId == addmessage.sender && receiveId == addmessage.receiver) {
+      console.log(addmessage.message)
+      $("#sent").append(`<p> ${addmessage.message} </p>`)
+    } else if (userId == addmessage.receiver && receiveId == addmessage.sender) {
+      $("#received").append(`<p> ${addmessage.message} </p>`)
+    }
+  }
+  adduser = (adduser) => {
+    debugger
+    console.log(adduser)
+    console.log(userId)
+    if (userId){
+      getStrangerList(userId)
+    }
+  }
+  var socket = io()
+  socket.on('addmessage', addMessage)
+  socket.on('adduser', adduser)
+</script>
+
+</html>
